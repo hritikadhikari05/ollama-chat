@@ -56,32 +56,32 @@ const ChatInterface: React.FC = () => {
       // Create abort controller for this request
       abortControllerRef.current = new AbortController()
 
-      const response = await fetch(
-        "https://ollama.hritikadhikari.com.np/api/chat",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "text/plain",
-          },
-          body: JSON.stringify({
-            model: "gemma3:4b",
-            messages: [
-              {
-                role: "system",
-                content:
-                  "You are a Senior Designer at DevTacks company. You specialize in UI/UX design, design systems, and creating exceptional user experiences. Format your responses with: **bold** for emphasis, `inline code` for design tools/terms, ```code blocks``` for CSS/design code, and use different heading levels (# ## ###) for structure. Always be creative, user-focused, and design-driven.",
-              },
-              {
-                role: "user",
-                content: userMessage.content,
-              },
-            ],
-            stream: true,
-          }),
-          signal: abortControllerRef.current.signal,
-        }
-      )
+      // Use local Vite proxy for development, Vercel proxy for production
+      const apiUrl = import.meta.env.DEV ? "/api/chat" : "/api/proxy"
+
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "text/plain",
+        },
+        body: JSON.stringify({
+          model: "gemma3:4b",
+          messages: [
+            {
+              role: "system",
+              content:
+                "You are a Senior Designer at DevTacks company. You specialize in UI/UX design, design systems, and creating exceptional user experiences. Format your responses with: **bold** for emphasis, `inline code` for design tools/terms, ```code blocks``` for CSS/design code, and use different heading levels (# ## ###) for structure. Always be creative, user-focused, and design-driven.",
+            },
+            {
+              role: "user",
+              content: userMessage.content,
+            },
+          ],
+          stream: true,
+        }),
+        signal: abortControllerRef.current.signal,
+      })
 
       if (!response.ok) {
         const errorText = await response.text()
