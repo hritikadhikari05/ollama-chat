@@ -1,8 +1,5 @@
 {
   "functions": {
-    "api/chat.ts": {
-      "maxDuration": 60
-    },
     "api/proxy.ts": {
       "maxDuration": 60
     }
