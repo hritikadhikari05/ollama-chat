@@ -1,3 +1,5 @@
+"use client"
+
 import { Bot, Check, Copy, User } from "lucide-react"
 import React, { useState } from "react"
 

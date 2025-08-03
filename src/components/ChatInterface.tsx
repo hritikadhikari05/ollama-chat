@@ -1,3 +1,5 @@
+"use client"
+
 import { Bot, MessageSquare, Send } from "lucide-react"
 import React, { useEffect, useRef, useState } from "react"
 import LoadingIndicator from "./LoadingIndicator"
@@ -56,8 +58,8 @@ const ChatInterface: React.FC = () => {
       // Create abort controller for this request
       abortControllerRef.current = new AbortController()
 
-      // Use local Vite proxy for development, Vercel proxy for production
-      const apiUrl = import.meta.env.DEV ? "/api/chat" : "/api/proxy"
+      // Use Next.js API route
+      const apiUrl = "/api/chat"
 
       const response = await fetch(apiUrl, {
         method: "POST",
