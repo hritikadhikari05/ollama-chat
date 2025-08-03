@@ -57,7 +57,7 @@ const ChatInterface: React.FC = () => {
       abortControllerRef.current = new AbortController()
 
       const response = await fetch(
-        "https://threshold-ralph-tales-md.trycloudflare.com/api/chat",
+        "https://ollama.hritikadhikari.com.np/api/chat",
         {
           method: "POST",
           headers: {
